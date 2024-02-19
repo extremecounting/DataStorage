@@ -11,7 +11,7 @@ float sigmoid(float value) {
     return (float)1.0 / (1.0 + std::exp(-value));
 }
 float sigmoidD(float input) {
-    return sigmoid(input)
+    return (sigmoid(input) * (1-sigmoid(input)));
 }
 //creates the desired amount of random floats
 std::vector<float> randomInputs(int length) {

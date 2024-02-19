@@ -51,13 +51,26 @@ public:
     std::vector<OutputNeuron> getNeurons() {
         return outputNeurons;
     }
-    std::vector<float> getCostFunc(std::vector<float> correctResult) {
+    std::vector<float> getCostFunc(const std::vector<float>& correctResult) {
         std::vector<float> costs;
         int least = std::min(outputNeurons.size(), correctResult.size());
         for (int i = 0; i < least; i++) {
-            //costs.push_back(std::exp(outputNeurons[i] - correctResult[i]), 2);
+            float error = outputNeurons[i].value - correctResult[i];
+            float cost = 0.5 * std::pow(error, 2);
+            costs.push_back(cost);
         }
         return costs;
+    }
+    void backpropagae(const std::vector<float>& correctResult, float laerningRate) {
+        int least = std::min(outputNeurons.size(), correctResult.size());
+        for (int i = 0; i < least; i++) {
+            float error = outputNeurons[i].value - correctResult[i];
+            float gradient = error * sigmoidD(outputNeurons[i].value);
+            for (int j =  0; j < outputNeurons[i].weights.size(); j++) { //__HIDDEN NEURONS__
+                outputNeurons[i]. -= learningRate * gradient * outputNeurons[i].outputs[j];
+            }
+
+        }
     }
 private:
     std::vector<OutputNeuron> outputNeurons;
