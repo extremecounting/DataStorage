@@ -95,6 +95,9 @@ public:
         hiddenLayers.push_back(hiddenLayer);
         amount++;
     }
+    HiddenLayer getLayer(int i) {
+        return hiddenLayers[i];
+    }
 private:
     std::vector<HiddenLayer> hiddenLayers;
     int amount = 0;

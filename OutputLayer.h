@@ -61,14 +61,22 @@ public:
         }
         return costs;
     }
-    void backpropagae(const std::vector<float>& correctResult, float laerningRate) {
+    void backpropagate(const std::vector<float>& correctResult, float learningRate, HiddenLayer hiddenLayer) {
         int least = std::min(outputNeurons.size(), correctResult.size());
         for (int i = 0; i < least; i++) {
             float error = outputNeurons[i].value - correctResult[i];
             float gradient = error * sigmoidD(outputNeurons[i].value);
-            for (int j =  0; j < outputNeurons[i].weights.size(); j++) { //__HIDDEN NEURONS__
-                outputNeurons[i]. -= learningRate * gradient * outputNeurons[i].outputs[j];
-            }
+            //gonna find the d/bias of hidden neurons
+            float gradientBias = gradient;
+            std::vector<float> gradientWeightOne;
+            for (int j = 0; j < hiddenLayer.getNeurons().size(); j++) {
+                hiddenLayer.getNeurons()[j].weights += hiddenLayer.getNeurons()[j].value * gradient;
+            } 
+            /*
+            std::vector<std::vector<float>> gradientWeightOne;
+            for (int j = 0; j < hiddenLayerGroup.getLayer(0).getNeurons().size(); j++) {
+                hiddenLayer.getNeurons()[j]
+            }*/
 
         }
     }
