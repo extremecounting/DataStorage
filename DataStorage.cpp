@@ -1,5 +1,7 @@
 // DataStorage.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
+#include "json.hpp"
+#include "Constants.h"
 #include "Utilities.h"
 #include "InputLayer.h"
 #include "HiddenLayer.h"
@@ -8,10 +10,26 @@
 
 #include <iostream>
 #include <random>
+#include <fstream>
+
+
+using json = nlohmann::json;
 
 
 int main()
 {
+    json data;
+    std::ofstream file(inputLayerPath);
+    data["inputNeurons"] = {};
+    if (file.is_open()) {
+        file << data.dump(2); // pretty print with indentation of 4 spaces
+        file.close();
+        std::cout << "JSON data has been written to file\n";
+    } else {
+        std::cerr << "Unable to open file\n";
+        return 1;
+    }
+    
     InputLayer inputLayer;
     HiddenLayer hiddenLayer;
     HiddenLayer hiddenLayer2;
@@ -36,7 +54,6 @@ int main()
     for (int i = 0; i < costs.size(); i++) {
         std::cout << costs[i] << "\n";
     }
-
-    
+    inputLayer.saveData();
     return 0;
 }

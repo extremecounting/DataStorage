@@ -4,6 +4,9 @@
 
 #include <vector>
 #include <random>
+#include <fstream>
+
+using json = nlohmann::json;
 
 class InputNeuron {
 public:
@@ -18,12 +21,21 @@ public:
             outputs.push_back(value * randWeight);
         }
     }
+    void saveData() {
+        json data;
+        data["inputNeurons"].push_back({value, {weights}, {outputs}});
+        std::ofstream file(inputLayerPath);
+        if (file.is_open()) {
+            file.close();
+        }
+    }
     std::vector<float> getOutputs() {
         return outputs;
     }
     float value;
     std::vector<float> weights;
     std::vector<float> outputs;
+
 };
 
 class InputLayer {
@@ -49,6 +61,11 @@ public:
             for (int j = 0; j < inputNeurons.size(); j++) {
                 outputSums[i] += inputNeurons[j].outputs[i];
             }
+        }
+    }
+    void saveData() {
+        for (int i = 0; i < inputNeurons.size(); i++) {
+            inputNeurons[i].saveData();
         }
     }
     std::vector<InputNeuron> getNeurons() {

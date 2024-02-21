@@ -4,6 +4,9 @@
 #include <cmath>
 #include <iostream>
 #include <random>
+
+
+
 float getRandom() {
     return ((float)(std::rand() % 10000) - 5000) / 10000;
 }

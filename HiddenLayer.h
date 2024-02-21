@@ -67,6 +67,12 @@ public:
             }
         }
     }
+    //gradient includes LR * error * σ'(aw+b)
+    void backpropagate(float gradient, int index) {
+        for (int i = 0; i < hiddenNeurons.size(); i++) {
+            hiddenNeurons[i].weights[index] += gradient * hiddenNeurons[i].value;
+        }
+    }
     float getOutputSum(int index) {
         return outputSums[index];
     }
