@@ -12,24 +12,38 @@
 #include <random>
 #include <fstream>
 
-
 using json = nlohmann::json;
-
 
 int main()
 {
+    std::ifstream file(inputLayerPath);
+
     json data;
-    std::ofstream file(inputLayerPath);
-    data["inputNeurons"] = {};
+    //data["inputNeurons"].push_back({"input"});
     if (file.is_open()) {
-        file << data.dump(2); // pretty print with indentation of 4 spaces
+        file >> data; // Load existing JSON data
         file.close();
-        std::cout << "JSON data has been written to file\n";
     } else {
         std::cerr << "Unable to open file\n";
-        return 1;
+        return  1;
     }
-    
+
+    // Append new object to the JSON array
+    data["inputNeurons"].push_back({
+        {"key12", "value12"},
+        {"key22", "value22"}
+    });
+
+    // Write the updated JSON data back to the file
+    std::ofstream outFile(inputLayerPath);
+    if (outFile.is_open()) {
+        outFile << data.dump(2); // pretty print with indentation of  2 spaces
+        outFile.close();
+        std::cout << "JSON data has been updated and written to file\n";
+    } else {
+        std::cerr << "Unable to open file for writing\n";
+        return  1;
+    }
     InputLayer inputLayer;
     HiddenLayer hiddenLayer;
     HiddenLayer hiddenLayer2;
@@ -54,6 +68,6 @@ int main()
     for (int i = 0; i < costs.size(); i++) {
         std::cout << costs[i] << "\n";
     }
-    inputLayer.saveData();
+    //inputLayer.saveData();
     return 0;
 }

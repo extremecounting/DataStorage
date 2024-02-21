@@ -1,0 +1,15 @@
+{
+  "inputNeurons": [
+    [
+      "input"
+    ],
+    {
+      "key1": "value1",
+      "key2": "value2"
+    },
+    {
+      "key12": "value12",
+      "key22": "value22"
+    }
+  ]
+}

@@ -2,6 +2,7 @@
 #ifndef CLASSES_H // Include guard to prevent double inclusion
 #define CLASSES_H
 
+#include "json.hpp"
 #include <vector>
 #include <random>
 #include <fstream>
@@ -23,9 +24,11 @@ public:
     }
     void saveData() {
         json data;
-        data["inputNeurons"].push_back({value, {weights}, {outputs}});
+        data["inputNeurons"].push_back(1);
+        //data["inputNeurons"].push_back({value, {weights}, {outputs}});
         std::ofstream file(inputLayerPath);
         if (file.is_open()) {
+            std::cout << "Test";
             file.close();
         }
     }
