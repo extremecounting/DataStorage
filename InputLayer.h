@@ -2,16 +2,19 @@
 #ifndef CLASSES_H // Include guard to prevent double inclusion
 #define CLASSES_H
 
+#include "Utilities.h"
 #include "json.hpp"
 #include <vector>
 #include <random>
 #include <fstream>
+#include <iostream>
 
 using json = nlohmann::json;
 
 class InputNeuron {
 public:
     InputNeuron(const float value) : value(value) {};
+    InputNeuron(const float value, std::vector<float> weights, std::vector<float> outputs) : value(value), weights(weights), outputs(outputs) {};
     void setWeights(int amount) {
         weights.reserve(amount);
         outputs.reserve(amount);
